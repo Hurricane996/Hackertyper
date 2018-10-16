@@ -22,12 +22,11 @@ int main(int argc, char ** argv){
             printf(HELP_STRING);
             return 1;
           }
-          i = atoi(argv[++i]);
-          if(i==0){
+          num_chars = atoi(argv[++i]);
+          if(num_chars==0){
             printf(HELP_STRING);
             return 1;
           }
-          num_chars = i;
         }
     }
   }
