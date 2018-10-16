@@ -1,19 +1,32 @@
-SHELL = /bin/sh
+SHELL=/bin/sh
+CFLAGS=-Wall -Wextra --pedantic -g -std=c99
 
 prefix=/usr/local
-mandir=/usr/local/share/man
+exec_prefix=$(prefix)
 
-data-file = data/kernel.txt
+bindir=$(exec_prefix)/bin
 
-hackertyper: src/main.c src/data.h
-	$(CC) $(CFLAGS) $? -o $@ 
-src/data.h: data.txt
-	xxd -i $? > $@
-data.txt: $(data-file)
-	cp $? $@
+datarootdir=$(prefix)/share
+mandir=$(datarootdir)/man
+man1dir=$(mandir)/man1
+
+data_file=data/kernel.txt
+
+hackertyper: src/hackertyper.c program_data.o src/hackertyper.h
+	$(CC) $(CFLAGS) -o $@ $^
+program_data.o:
+	cp $(data_file) program_data
+	$(LD) -r -b binary program_data -o $@
+
+.PHONY: clean
 clean:
-	rm -f hackertyper src/data.h data.txt
-install: hackertyper
-	install -m 755 hackertyper $(prefix)/bin
-	install -m 644 doc/hackertyper.1 $(mandir)/man1
+	rm -f hackertyper program_data *.o
 
+.PHONY: uninstall
+uninstall:
+	rm -f $(bindir)/hackertyper
+	rm -f $(man1dir)/hackertyper.1
+.PHONY: install
+install:
+	install -m 755 hackertyper $(bindir)
+	install -m 644 man/hackertyper.1 $(man1dir)
