@@ -13,7 +13,7 @@ Written by Lani Willrich\n\
 "
 
 #define HELP_STRING "\
-Write this later\n\
+Usage: hackertyper [options]\n\
 "
 
 extern const char _binary_program_data_start;
