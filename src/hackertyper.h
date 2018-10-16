@@ -13,7 +13,12 @@ Written by Lani Willrich\n\
 "
 
 #define HELP_STRING "\
-Usage: hackertyper [options]\n\
+Usage:\n\
+hackertyper [options]\n\
+Options:\n\
+  -h,--help       Print this help string\n\
+  -v,--version    Print version info\n\
+  -n,--num-chars  Customize number of chars outputted per button press\n\
 "
 
 extern const char _binary_program_data_start;

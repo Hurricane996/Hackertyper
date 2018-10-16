@@ -22,8 +22,14 @@ int main(int argc, char ** argv){
             printf(HELP_STRING);
             return 1;
           }
-          num_chars = atoi(argv[++i]);
-          if(num_chars==0){
+          i++;
+          char* ptr;
+          num_chars = strtol(argv[i],&ptr,10);
+          if(*ptr != '\0'){ //if entire string wasn't parsed
+            printf(HELP_STRING);
+            return 1;
+          }
+          if(num_chars==0 ){
             printf(HELP_STRING);
             return 1;
           }
