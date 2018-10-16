@@ -18,7 +18,9 @@ Hackertyper is a clone of the popular web app, found at www.hackertyper.net . It
 
 -v, \--version
 :   Print version
+
 -h, \--help
 :   Print help string
+
 -n, \--num-chars
 :   Choose how many characters to output per keypress. 
