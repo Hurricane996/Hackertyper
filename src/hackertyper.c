@@ -17,7 +17,7 @@ int main(int argc, char ** argv){
             printf(HELP_STRING);
             return 0;
         }
-        if(strcmp(argv[i],"n") == 0 || strcmp(argv[i],"--num-chars") == 0) {
+        if(strcmp(argv[i],"-n") == 0 || strcmp(argv[i],"--num-chars") == 0) {
           if(i==argc-1){
             printf(HELP_STRING);
             return 1;
