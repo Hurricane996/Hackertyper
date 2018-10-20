@@ -4,7 +4,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include "hackertyper.h"
-
+void cls(){
+  for(int i = 0; i < 100; i++){
+    write(STDOUT_FILENO,"\n",1);
+  }
+  write(STDOUT_FILENO,ANSI_TOP_LEFT,ANSI_TOP_LEFT_LEN);
+}
 int main(int argc, char ** argv){
   int num_chars=0;
   if(argc > 1){
@@ -49,15 +54,33 @@ int main(int argc, char ** argv){
 
   write(STDOUT_FILENO,ANSI_GREEN,ANSI_GREEN_LEN);
 
+  cls();
+  
   char c;
   int offset = 0;
-  while (read(STDIN_FILENO, &c, 1) == 1 && c != '\x04' && c != '\x03'){
-    for(int i = 0; i < num_chars; i ++){
-      write(STDOUT_FILENO, &DATA_START + offset, 1);
+  while (read(STDIN_FILENO, &c, 1) == 1 && c != '\x03'){
+    if(c == '\x04' || c == '\x07'){ // access denied or access granted
+      cls();
 
-      offset++;
+      offset = 0; // otherwise code will be cut off in middle of line
+      
+      if(c == '\x04'){ //denied
+        write(STDOUT_FILENO,ANSI_RED,ANSI_RED_LEN);
+        write(STDOUT_FILENO,ACCESS_DENIED,ACCESS_DENIED_LEN);
+      }
+      if(c == '\x07'){ //granted
+        write(STDOUT_FILENO,ACCESS_GRANTED,ACCESS_GRANTED_LEN);
+      }
+      write(STDOUT_FILENO,ANSI_GREEN,ANSI_GREEN_LEN);
+    }
+    else{
+      for(int i = 0; i < num_chars; i ++){
+        write(STDOUT_FILENO, &DATA_START + offset, 1);
 
-      if (&DATA_START + offset == &DATA_END) offset = 0;
+        offset++;
+
+        if (&DATA_START + offset == &DATA_END) offset = 0;
+      }
     };
   };
 
