@@ -52,7 +52,6 @@ int main(int argc, char ** argv){
   char c;
   int offset = 0;
   while (read(STDIN_FILENO, &c, 1) == 1 && c != '\x04' && c != '\x03'){
-
     for(int i = 0; i < num_chars; i ++){
       write(STDOUT_FILENO, &DATA_START + offset, 1);
 
