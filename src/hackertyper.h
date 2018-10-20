@@ -27,9 +27,34 @@ extern const char _binary_program_data_end;
 #define DATA_START _binary_program_data_start
 #define DATA_END   _binary_program_data_end
 
-#define ANSI_GREEN     "\x1b[32m"
-#define ANSI_GREEN_LEN 5
-#define ANSI_WHITE     "\x1b[0m"
-#define ANSI_WHITE_LEN 4
+#define STRLEN(s) sizeof(s)
+
+#define ANSI_GREEN "\x1b[32m"
+#define ANSI_WHITE "\x1b[0m"
+#define ANSI_RED   "\x1b[31m"
+#define ANSI_TOP_LEFT "\x1b[H"
+
+#define ANSI_GREEN_LEN    sizeof(ANSI_GREEN)
+#define ANSI_WHITE_LEN    sizeof(ANSI_RED)
+#define ANSI_RED_LEN      sizeof(ANSI_WHITE)
+#define ANSI_TOP_LEFT_LEN sizeof(ANSI_TOP_LEFT)
+
+#define ACCESS_GRANTED "\
+######################\n\
+#                    #\n\
+#   ACCESS GRANTED   #\n\
+#                    #\n\
+######################\n\
+"
+#define ACCESS_GRANTED_LEN sizeof(ACCESS_GRANTED)
+
+#define ACCESS_DENIED "\
+#####################\n\
+#                   #\n\
+#   ACCESS DENIED   #\n\
+#                   #\n\
+#####################\n\
+"
+#define ACCESS_DENIED_LEN sizeof(ACCESS_DENIED)
 
 #define DEFAULT_NUM_CHARS 7
