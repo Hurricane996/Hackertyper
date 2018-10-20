@@ -7,8 +7,6 @@ AC_INIT([hackertyper], [1.0], [])
 AM_INIT_AUTOMAKE
 
 default_programdata="data/kernel.txt"
-
-
 AC_ARG_WITH([programdata],
         AS_HELP_STRING([--with-programdata],[Set which data file hackertyper outputs from])
 )
