@@ -1,0 +1,2 @@
+Lani Willrich - All files except for data/kernel.txt
+Linus Torovalds - data/kernel.txt (copied from Linux source code: kernel/groups.c)

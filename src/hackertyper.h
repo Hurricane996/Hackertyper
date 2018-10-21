@@ -4,7 +4,7 @@
 #define AUTHOR "Lani Willrich"
 
 #define VERSION_STRING "\
-hackertyper 1.1\n\
+hackertyper 1.0\n\
 Copyright (C) 2018 Lani Willrich\n\
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\
