@@ -1,5 +1,5 @@
 # Hackertyper - cheesy movie hacker
 
-Hackertyper is a clone of the website [hackertyper.net](https://www.hackertyper.nt/) written in C.
+Hackertyper is a clone of the website [hackertyper.net](https://www.hackertyper.net/) written in C.
 
 Hackertyper outputs text to STDOUT whenever a character is recieved from STDIN. This creates the visual effect of the user typing this arbitrary text. By default, this text is a file taken from the Linux kernel source code, however it can be specified at compile time.
