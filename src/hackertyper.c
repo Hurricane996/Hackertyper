@@ -148,11 +148,9 @@ void nc_color_default(){
 
 // TODO: fix this shit
 void draw_msg(char* msg) {
-  int len   = strlen(msg);
-  int hash  = atoi("#");
-  int space = atoi(" ");
-
-  WINDOW* stdscr;
+  int len             = strlen(msg);
+  unsigned char hash  = '#';
+  unsigned char space = ' ';
 
   int w;
   int h;
@@ -174,7 +172,7 @@ void draw_msg(char* msg) {
   addch(hash);
 
   move(h/2, w/2 - len/2 - 3);
-  printw("%s  %s  %s", hash, msg, hash);
+  printw("#  %s  #", msg);
 
   move(h/2 + 1, w/2 - len/2 - 3);
   addch(hash);
