@@ -1,6 +1,6 @@
-# Hackertyper 2
+# Hackertyper
 
-Hackertyper 2 is a c program which copies the functionality of http://hackertyper.net, reading characters from a file, and writing said characters to stdout.
+Hackertyper is a c program which copies the functionality of http://hackertyper.net, reading characters from a file, and writing said characters to stdout.
 
 # Requirements
 

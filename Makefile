@@ -1,5 +1,5 @@
 PREFIX=/usr/local
-EXEC_PREFIX=$(PREFIX)/bin
+BINDIR=$(PREFIX)/bin
 DATAROOTDIR=$(PREFIX)/share
 DATADIR=$(DATAROOTDIR)
 MAN1DIR=$(DATAROOTDIR)/man/man1
@@ -9,14 +9,20 @@ LDFLAGS=-lncurses
 
 all: hackertyper
 
-clean:
-	rm -f hackertyper{,.o,.h}
-install: hackertyper
-	install hackertyper $(EXEC_PREFIX) -m755
-	install hackertyper.txt $(DATADIR) -m644
-	install hackertyper.1   $(MAN1DIR) -m644
+.PHONY: all hackertyper clean install
+
 hackertyper: hackertyper.o
-hackertyper.o:hackertyper.c
-hackertyper.c: hackertyper.h
-hackertyper.h: hackertyper.h.in
-	sed "s@%datadir%@$(DATADIR)@g" hackertyper.h.in > hackertyper.h
+	cc $(LDFLAGS) -o $@ $^
+hackertyper.o: src/hackertyper.c
+	cc -c $(CFLAGS) -o $@ $^
+src/hackertyper.c: src/hackertyper.h
+src/hackertyper.h:src/hackertyper.h.in
+	sed "s@%datadir%@$(DATADIR)@g" src/hackertyper.h.in > src/hackertyper.h
+
+clean:
+	rm -f hackertyper{,.o} src/hackertyper.h
+
+install:
+	install -m644 data/hackertyper.txt $(DATADIR)
+	install -m644 man/hackertyper.1 $(MAN1DIR)
+	install -m755 hackertyper $(BINDIR)
