@@ -44,6 +44,7 @@ int main(int argc,char* argv[]){
       clear();
       move(0,0);
       clear_msg_flag = 0;
+      rewind(file);//to prevent issues where you start typing from middle of line.
     }
     for(int i = 0; i < 5; i++){
       int output_ch = fgetc(file);
