@@ -5,7 +5,7 @@ script: make
 jobs:
   include:
    # Linux build job
-   - name: Build
+   - name: Linux build
      dist: xenial
    # macOS build job
    - name: macOS build
