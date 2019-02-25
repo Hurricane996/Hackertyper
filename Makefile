@@ -12,7 +12,7 @@ all: hackertyper
 .PHONY: all hackertyper clean install
 
 hackertyper: hackertyper.o
-	cc $(LDFLAGS) -o $@ $^
+	cc -o $@ $^ $(LDFLAGS)
 hackertyper.o: src/hackertyper.c
 	cc -c $(CFLAGS) -o $@ $^
 src/hackertyper.c: src/hackertyper.h
