@@ -1,12 +1,14 @@
 language: c
+dist: xenial
 
-script: make
+script:
+ - make
+ - make install
 
 jobs:
   include:
-   # Linux build job
-   - name: Linux build
-     dist: xenial
-   # macOS build job
-   - name: macOS build
+   - name: Linux GCC build
+   - name: Linux Clang build
+     compiler: clang
+   - name: macOS GCC build
      os: osx
