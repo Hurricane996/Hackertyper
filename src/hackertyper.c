@@ -77,7 +77,76 @@ int main(int argc, char* argv[]) {
   end();
 }
 
-//TODO: fix this shit
+void parse_args(int argc, char* argv[]) {
+  if(argc > 1) {
+    for(int i = 0; i < argc; i++) {
+      if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+        printf(HELP_TEXT);
+
+        exit(0);
+      }
+
+      if(strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
+        printf(VERSION_TEXT);
+
+        exit(0);
+      }
+
+      if(strcmp(argv[i], "-f") == 0) {
+        if(i+1 >= argc) {
+          fprintf(stderr, HELP_TEXT);
+
+          exit(-1);
+        }
+
+        filename = argv[i+1];
+      }
+    }
+  }
+}
+
+int open_file(char* filename) {
+  filename = filename ? filename : default_filename;
+  file     = fopen(filename, "r");
+
+  return file == NULL ? -1 : 0;
+}
+
+void nc_init(){
+  initscr();
+  raw();
+  noecho();
+  scrollok(stdscr, true);
+
+  if(has_colors()){
+    start_color();
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_RED, COLOR_BLACK);
+  }
+}
+
+void nc_color_green(){
+  if(has_colors()){
+    attroff(COLOR_PAIR(2));
+    attron(COLOR_PAIR(1));
+  }
+}
+
+void nc_color_red(){
+  if(has_colors()){
+    attroff(COLOR_PAIR(1));
+    attron(COLOR_PAIR(2));
+  }
+}
+
+void nc_color_default(){
+  if(has_colors()){
+    attroff(COLOR_PAIR(1));
+    attroff(COLOR_PAIR(2));
+  }
+}
+
+// TODO: fix this shit
 void draw_msg(char* msg) {
   int len   = strlen(msg);
   int hash  = atoi("#");
@@ -119,75 +188,6 @@ void draw_msg(char* msg) {
 
   for(int i = 0; i < len + 6; i ++)
     addch(hash);
-}
-
-int open_file(char* filename) {
-  filename = filename ? filename : default_filename;
-  file     = fopen(filename, "r");
-
-  return file == NULL ? -1 : 0;
-}
-
-void parse_args(int argc, char* argv[]) {
-  if(argc > 1) {
-    for(int i = 0; i < argc; i++) {
-      if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
-        printf(HELP_TEXT);
-
-        exit(0);
-      }
-
-      if(strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
-        printf(VERSION_TEXT);
-
-        exit(0);
-      }
-
-      if(strcmp(argv[i], "-f") == 0) {
-        if(i+1 >= argc) {
-          fprintf(stderr, HELP_TEXT);
-
-          exit(-1);
-        }
-
-        filename = argv[i+1];
-      }
-    }
-  }
-}
-
-void nc_init(){
-  initscr();
-  raw();
-  noecho();
-  scrollok(stdscr, true);
-
-  if(has_colors()){
-    start_color();
-    init_pair(1, COLOR_GREEN, COLOR_BLACK);
-    init_pair(2, COLOR_RED, COLOR_BLACK);
-  }
-}
-
-void nc_color_green(){
-  if(has_colors()){
-    attroff(COLOR_PAIR(2));
-    attron(COLOR_PAIR(1));
-  }
-}
-
-void nc_color_red(){
-  if(has_colors()){
-    attroff(COLOR_PAIR(1));
-    attron(COLOR_PAIR(2));
-  }
-}
-
-void nc_color_default(){
-  if(has_colors()){
-    attroff(COLOR_PAIR(1));
-    attroff(COLOR_PAIR(2));
-  }
 }
 
 void end(){
