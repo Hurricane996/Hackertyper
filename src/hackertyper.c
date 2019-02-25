@@ -1,10 +1,5 @@
 #include "hackertyper.h"
 
-#include <string.h>
-#include <ncurses.h>
-#include <stdio.h>
-#include <stdlib.h>
-
 char* filename;
 FILE* file;
 
