@@ -1,4 +1,4 @@
-# Hackertyper
+# Hackertyper [![Travis Build Status](https://travis-ci.org/Hurricane996/Hackertyper.svg?branch=master)](https://travis-ci.com/Hurricane996/Hackertyper)
 
 Hackertyper is a c program which copies the functionality of http://hackertyper.net, reading characters from a file, and writing said characters to stdout.
 
