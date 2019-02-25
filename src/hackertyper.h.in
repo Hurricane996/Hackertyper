@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <ncurses.h>
+#include <string.h>
 
 #define default_filename "%datadir%/hackertyper.txt"
 
@@ -23,12 +26,13 @@ Written by Lani Willrich\n\
 
 void parse_args(int argc,char* argv[]);
 
+int open_file(char* filename);
+
 void nc_init();
 void nc_color_red();
 void nc_color_green();
 void nc_color_default();
 
-int open_file(char* filename);
-void end();
-
 void draw_msg(char* msg);
+
+void end();
