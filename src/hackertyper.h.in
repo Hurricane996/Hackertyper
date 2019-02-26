@@ -34,5 +34,6 @@ void nc_color_green();
 void nc_color_default();
 
 void draw_msg(char* msg);
+void clear_msg();
 
 void end();

@@ -18,59 +18,54 @@ int main(int argc, char* argv[]) {
 
   nc_color_green();
 
-  for(;;) {
-    int input_ch = getch();
+  int running = 1;
+  
+  while(running) {
+    char input_ch  = getch();  
+    // message was drawn last time and we need to clear it
+    if(clear_msg_flag) {
+      clear_msg_flag = 0;
+      clear_msg();
+    }
 
-    if(input_ch == 3)
+    switch(input_ch){
+    //C-c
+    case 3:
+      running = 0;
       break;
-
-    // C-d
-    if(input_ch == 4) {
+    //C-d
+    case 4:
       clear();
       nc_color_red();
       draw_msg("ACCESS DENIED");
-
       clear_msg_flag = 1;
-
-      continue;
-    }
+      break;
 
     // C-g
-    if(input_ch == 7) {
+    case 7:
       clear();
       nc_color_green();
       draw_msg("ACCESS GRANTED");
 
       clear_msg_flag = 1;
 
-      continue;
-    }
+      break;
+    default:
+      for(int i = 0; i < 5; i++) {
+        int output_ch = fgetc(file);
 
-    // message was drawn last time and we need to clear it
-    if(clear_msg_flag == 1) {
-      nc_color_green();
-      clear();
-      move(0, 0);
+        if(output_ch == EOF) {
+          rewind(file);
 
-      clear_msg_flag = 0;
+          output_ch = fgetc(file);
+        }
 
-      // to prevent issues where you start typing from middle of line.
-      rewind(file);
-    }
-
-    for(int i = 0; i < 5; i++) {
-      int output_ch = fgetc(file);
-
-      if(output_ch == EOF) {
-        rewind(file);
-
-        output_ch = fgetc(file);
+        addch(output_ch);
       }
 
-      addch(output_ch);
+      refresh();
+      break;
     }
-
-    refresh();
   }
 
   nc_color_default();
@@ -186,6 +181,14 @@ void draw_msg(char* msg) {
 
   for(int i = 0; i < len + 6; i ++)
     addch(hash);
+}
+
+void clear_msg(){
+      nc_color_green();
+      clear();
+      move(0, 0);
+      // to prevent issues where you start typing from middle of line.
+      rewind(file);
 }
 
 void end(){
