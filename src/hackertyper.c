@@ -21,6 +21,7 @@ int main(int argc, char* argv[]) {
   int running = 1;
   
   while(running) {
+    // buffer here so that buffering happens before clear_msg
     char input_ch  = getch();  
     // message was drawn last time and we need to clear it
     if(clear_msg_flag) {
