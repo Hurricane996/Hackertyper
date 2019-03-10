@@ -41,6 +41,12 @@ int main(int argc, char* argv[]) {
       draw_msg("ACCESS DENIED");
       clear_msg_flag = 1;
       break;
+    //backspace or delete
+    case 8:
+    case 127:
+      delch();
+      fseek(file,-1,SEEK_CUR);
+      break;
 
     // C-g
     case 7:
