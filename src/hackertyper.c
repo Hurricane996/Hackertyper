@@ -69,7 +69,6 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  nc_color_default();
   end();
 }
 
@@ -198,6 +197,5 @@ void clear_msg(){
 
 void end(){
   endwin();
-
   fclose(file);
 }
