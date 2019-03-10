@@ -188,8 +188,12 @@ void clear_msg(){
       nc_color_green();
       clear();
       move(0, 0);
-      // to prevent issues where you start typing from middle of line.
-      rewind(file);
+      // seek file to next line
+      int ch = 0;
+
+      while(ch != '\n'){
+        ch = fgetc(file);
+      }
 }
 
 void end(){

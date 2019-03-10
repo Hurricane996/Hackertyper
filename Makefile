@@ -23,6 +23,6 @@ clean:
 	rm -f hackertyper{,.o} src/hackertyper.h
 
 install:
-	install -m644 data/hackertyper.txt $(DATADIR)
-	install -m644 man/hackertyper.1 $(MAN1DIR)
-	install -m755 hackertyper $(BINDIR)
+	install -D -m644 data/hackertyper.txt $(DATADIR)/hackertyper.txt
+	install -D -m644 man/hackertyper.1 $(MAN1DIR)/hackertyper.1
+	install -D -m755 hackertyper $(BINDIR)/hackertyper
