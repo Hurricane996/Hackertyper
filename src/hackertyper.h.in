@@ -16,7 +16,7 @@ Options:\n\
 "
 
 #define VERSION_TEXT "\
-hackertyper 2.0\n\
+hackertyper 2.1\n\
 Copyright (C) 2019 Lani Willrich\n\
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\

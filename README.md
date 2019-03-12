@@ -13,3 +13,11 @@ On linux and mac, you almost definitely have these. On Windows, you probably don
     make
     sudo make install
 
+
+# Testing
+To test this program without installing, run the command
+    make DATADIR=data
+
+Note that if this commmand is used, then the file must be recompiled without this option to be installed
+
+

@@ -1,1 +1,1 @@
-Hackertyper 2.0 is a complete rewrite. It now uses ncurses, which makes the code cleaner, as well as make instead of autohell. It has also returned to loading from files, vs linking the text files directly into the file.
+Hackertyper 2.1 adds the delete function, as well as LOTS of bug fixes and code changes
