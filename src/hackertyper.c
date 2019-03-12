@@ -3,16 +3,18 @@
 char* filename;
 FILE* file;
 
+
+char chars_per_nl = 1;
+
 int main(int argc, char* argv[]) {
   parse_args(argc, argv);
 
   if(open_file(filename) == -1){
-    fprintf(stderr, "Could not open file\n");
 
     return -1;
   }
 
-  nc_init();
+  init();
 
   int clear_msg_flag = 0;
 
@@ -22,7 +24,7 @@ int main(int argc, char* argv[]) {
   
   while(running) {
     // buffer here so that buffering happens before clear_msg
-    char input_ch  = getch();  
+    int input_ch  = getch();  
     // message was drawn last time and we need to clear it
     if(clear_msg_flag) {
       clear_msg_flag = 0;
@@ -41,13 +43,6 @@ int main(int argc, char* argv[]) {
       draw_msg("ACCESS DENIED");
       clear_msg_flag = 1;
       break;
-    //backspace or delete
-    case 8:
-    case 127:
-      delch();
-      fseek(file,-1,SEEK_CUR);
-      break;
-
     // C-g
     case 7:
       clear();
@@ -56,6 +51,9 @@ int main(int argc, char* argv[]) {
 
       clear_msg_flag = 1;
 
+      break;
+    case KEY_BACKSPACE:
+      backspace();
       break;
     default:
       for(int i = 0; i < 5; i++) {
@@ -67,7 +65,8 @@ int main(int argc, char* argv[]) {
           output_ch = fgetc(file);
         }
 
-        addch(output_ch);
+        if(output_ch != '\r')
+          addch(output_ch);
       }
 
       refresh();
@@ -114,12 +113,28 @@ int open_file(char* filename) {
   return file == NULL ? -1 : 0;
 }
 
-void nc_init(){
+void init(){
   initscr();
   raw();
   noecho();
   scrollok(stdscr, true);
+  keypad(stdscr, true);
 
+  // check line endings
+  // TODO: expand this to work with endings besides \n and \r\n
+  
+  char ch;
+
+  while(ch !='\n' && ch !='\r'){
+    ch = fgetc(file);
+  }
+
+  if (ch == '\r') {
+    chars_per_nl = 2;
+  }
+
+  rewind(file); 
+  
   if(has_colors()){
     start_color();
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
@@ -146,6 +161,40 @@ void nc_color_default(){
     attroff(COLOR_PAIR(1));
     attroff(COLOR_PAIR(2));
   }
+}
+
+void backspace(){
+  fseek(file,-1 ,SEEK_CUR);
+
+  int x,y;
+  getyx(stdscr,y,x);
+  
+  if(x == 0) {
+
+    if( y == 0 ) {
+      
+      return;
+    }
+    
+    x = getmaxx(stdscr);
+    // set x to x minus 1
+    move(--y,--x);
+
+    char ch = ' ';
+
+    while(ch == ' ' && x != 0){
+      move(y,--x);
+      ch=inch();
+    }
+
+    fseek(file, -chars_per_nl, SEEK_CUR);
+  } else {
+    move(y,x-1);
+
+  }
+
+
+  delch();
 }
 
 // TODO: fix this shit

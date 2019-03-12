@@ -1,3 +1,4 @@
 *.o
 hackertyper
 src/hackertyper.h
+build/
