@@ -9,7 +9,7 @@ LDFLAGS=-lncurses
 
 all: hackertyper
 
-.PHONY: all hackertyper clean install
+.PHONY: all clean install
 
 hackertyper: hackertyper.o
 	cc -o $@ $^ $(LDFLAGS)
