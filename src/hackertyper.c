@@ -196,7 +196,6 @@ void backspace(){
   delch();
 }
 
-// TODO: fix this shit
 void draw_msg(char* msg) {
   int len             = strlen(msg);
   unsigned char hash  = '#';
