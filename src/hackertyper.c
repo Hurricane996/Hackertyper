@@ -1,15 +1,16 @@
 #include "hackertyper.h"
 
-char* filename;
 FILE* file;
 
 
 char chars_per_nl = 1;
 
-int main(int argc, char* argv[]) {
-  parse_args(argc, argv);
+int main(int argc, char* argv[]){
+  char path[4096];
+  
+  parse_args(argc, argv, path);
 
-  if(open_file(filename) == -1){
+  if(open_file(path) == -1){
 
     return -1;
   }
@@ -77,7 +78,7 @@ int main(int argc, char* argv[]) {
   end();
 }
 
-void parse_args(int argc, char* argv[]) {
+void parse_args(int argc, char* argv[], char* path) {
   if(argc > 1) {
     for(int i = 0; i < argc; i++) {
       if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
@@ -99,15 +100,23 @@ void parse_args(int argc, char* argv[]) {
           exit(-1);
         }
 
-        filename = argv[i+1];
+        if(strlen(argv[i+1]) + 1 > 4096) {
+          fprintf(stderr, "Error: path too long");
+
+          exit(-1);
+        }
+
+        strcpy(path, argv[i+1]);
       }
     }
   }
 }
 
-int open_file(char* filename) {
-  filename = filename ? filename : default_filename;
-  file     = fopen(filename, "r");
+int open_file(char* path) {
+  if ( strlen(path) == 0 ) {
+    path = DEFAULT_PATH;
+  }
+  file     = fopen(path, "r");
 
   return file == NULL ? -1 : 0;
 }
@@ -175,9 +184,8 @@ void backspace(){
       return;
     }
     
-    x = getmaxx(stdscr);
-    // set x to x minus 1
-    move(--y,--x);
+    x = getmaxx(stdscr) - 1;
+    move(--y,x);
 
     char ch = ' ';
 
@@ -198,8 +206,6 @@ void backspace(){
 
 void draw_msg(char* msg) {
   int len             = strlen(msg);
-  unsigned char hash  = '#';
-  unsigned char space = ' ';
 
   int w;
   int h;
@@ -209,44 +215,41 @@ void draw_msg(char* msg) {
   move(h/2 - 2, w/2 - len/2 - 3);
 
   for(int i = 0; i < len + 6; i ++)
-    addch(hash);
+    addch('#');
 
   move(h/2 - 1, w/2 - len/2 - 3);
 
-  addch(hash);
+  addch('#');
 
   for(int i = 0; i < len + 4; i ++)
-    addch(space);
+    addch(' ');
 
-  addch(hash);
+  addch('#');
 
   move(h/2, w/2 - len/2 - 3);
   printw("#  %s  #", msg);
 
   move(h/2 + 1, w/2 - len/2 - 3);
-  addch(hash);
+  addch('#');
 
   for(int i = 0; i < len + 4; i ++)
-    addch(space);
+    addch(' ');
 
-  addch(hash);
+  addch('#');
 
   move(h/2 + 2, w/2 - len/2 - 3);
 
   for(int i = 0; i < len + 6; i ++)
-    addch(hash);
+    addch('#');
 }
 
 void clear_msg(){
       nc_color_green();
       clear();
       move(0, 0);
-      // seek file to next line
-      int ch = 0;
+      // seek file to next line   
 
-      while(ch != '\n'){
-        ch = fgetc(file);
-      }
+      while(fgetc(file) != '\n');
 }
 
 void end(){
