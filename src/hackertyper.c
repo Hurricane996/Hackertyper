@@ -8,7 +8,7 @@ char chars_per_nl = 1;
 int main(int argc, char* argv[]){
   char* path;
   
-  parse_args(argc, argv, path);
+  parse_args(argc, argv, &path);
 
   if(open_file(path) == -1){
 
