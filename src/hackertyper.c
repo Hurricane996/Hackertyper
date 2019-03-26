@@ -6,7 +6,7 @@ FILE* file;
 char chars_per_nl = 1;
 
 int main(int argc, char* argv[]){
-  char path[4096];
+  char* path;
   
   parse_args(argc, argv, path);
 
@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
 
     return -1;
   }
-
+  
   init();
 
   int clear_msg_flag = 0;
@@ -78,7 +78,7 @@ int main(int argc, char* argv[]){
   end();
 }
 
-void parse_args(int argc, char* argv[], char* path) {
+void parse_args(int argc, char* argv[], char** path) {
   if(argc > 1) {
     for(int i = 0; i < argc; i++) {
       if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
@@ -99,14 +99,7 @@ void parse_args(int argc, char* argv[], char* path) {
 
           exit(-1);
         }
-
-        if(strlen(argv[i+1]) + 1 > 4096) {
-          fprintf(stderr, "Error: path too long");
-
-          exit(-1);
-        }
-
-        strcpy(path, argv[i+1]);
+        *path = argv
       }
     }
   }
