@@ -6,7 +6,7 @@ FILE* file;
 char chars_per_nl = 1;
 
 int main(int argc, char* argv[]){
-  char* path;
+  const char* path = DEFAULT_PATH;
   
   parse_args(argc, argv, &path);
 
@@ -78,7 +78,7 @@ int main(int argc, char* argv[]){
   end();
 }
 
-void parse_args(int argc, char* argv[], char** path) {
+void parse_args(int argc, char* argv[], const char** path) {
   if(argc > 1) {
     for(int i = 0; i < argc; i++) {
       if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
@@ -87,28 +87,29 @@ void parse_args(int argc, char* argv[], char** path) {
         exit(0);
       }
 
-      if(strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
+      else if(strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) {
         printf(VERSION_TEXT);
 
         exit(0);
       }
 
-      if(strcmp(argv[i], "-f") == 0) {
+      else if(strcmp(argv[i], "-f") == 0) {
         if(i+1 >= argc) {
           fprintf(stderr, HELP_TEXT);
 
           exit(-1);
         }
-        *path = argv
+
+        *path = argv[++ i];
+      }
+      else {
+        fprintf(stderr, HELP_TEXT);
       }
     }
   }
 }
 
-int open_file(char* path) {
-  if ( strlen(path) == 0 ) {
-    path = DEFAULT_PATH;
-  }
+int open_file(const char* path) {
   file     = fopen(path, "r");
 
   return file == NULL ? -1 : 0;
@@ -124,7 +125,7 @@ void init(){
   // check line endings
   // TODO: expand this to work with endings besides \n and \r\n
   
-  char ch;
+  char ch = 0;
 
   while(ch !='\n' && ch !='\r'){
     ch = fgetc(file);
@@ -234,6 +235,8 @@ void draw_msg(char* msg) {
 
   for(int i = 0; i < len + 6; i ++)
     addch('#');
+  
+  move(0,0);
 }
 
 void clear_msg(){

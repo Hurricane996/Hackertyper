@@ -4,7 +4,8 @@ DATAROOTDIR=$(PREFIX)/share
 DATADIR=$(DATAROOTDIR)
 MAN1DIR=$(DATAROOTDIR)/man/man1
 
-CFLAGS=-Wall -pedantic -std=c99
+
+CFLAGS=-Wall -pedantic -std=c99 -O3 -DDATADIR=\"$(DATADIR)\"
 LDFLAGS=-lncurses
 
 all: hackertyper
@@ -16,11 +17,10 @@ hackertyper: hackertyper.o
 hackertyper.o: src/hackertyper.c
 	cc -c $(CFLAGS) -o $@ $^
 src/hackertyper.c: src/hackertyper.h
-src/hackertyper.h:src/hackertyper.h.in
-	sed "s@%datadir%@$(DATADIR)@g" src/hackertyper.h.in > src/hackertyper.h
+
 
 clean:
-	rm -f hackertyper{,.o} src/hackertyper.h
+	rm -f hackertyper{,.o}
 
 install:
 	install -D -m644 data/hackertyper.txt $(DATADIR)/hackertyper.txt

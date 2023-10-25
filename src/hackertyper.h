@@ -3,7 +3,7 @@
 #include <ncurses.h>
 #include <string.h>
 
-#define DEFAULT_PATH "%datadir%/hackertyper.txt"
+#define DEFAULT_PATH DATADIR "/hackertyper.txt"
 
 #define HELP_TEXT "\
 Usage: hackertyper [-f file] [-h] [-v]\n\
@@ -24,9 +24,9 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 Written by Lani Willrich\n\
 "
 
-void parse_args(int argc,char* argv[], char* path);
+void parse_args(int argc,char* argv[], const char** path);
 
-int open_file(char* path);
+int open_file(const char* path);
 
 void init();
 void nc_color_red();
