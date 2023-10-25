@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
   parse_args(argc, argv, &path);
 
   if(open_file(path) == -1){
-
+    perror("Hackertyper: Could not open file");
     return -1;
   }
   
@@ -80,7 +80,8 @@ int main(int argc, char* argv[]){
 
 void parse_args(int argc, char* argv[], const char** path) {
   if(argc > 1) {
-    for(int i = 0; i < argc; i++) {
+    // skip the first argument
+    for(int i = 1; i < argc; i++) {
       if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
         printf(HELP_TEXT);
 
@@ -104,6 +105,8 @@ void parse_args(int argc, char* argv[], const char** path) {
       }
       else {
         fprintf(stderr, HELP_TEXT);
+
+        exit(-1);
       }
     }
   }

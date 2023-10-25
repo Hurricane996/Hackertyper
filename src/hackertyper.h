@@ -3,6 +3,10 @@
 #include <ncurses.h>
 #include <string.h>
 
+#ifndef DATADIR
+#define DATADIR "data"
+#endif 
+
 #define DEFAULT_PATH DATADIR "/hackertyper.txt"
 
 #define HELP_TEXT "\
@@ -16,8 +20,8 @@ Options:\n\
 "
 
 #define VERSION_TEXT "\
-hackertyper 2.1\n\
-Copyright (C) 2019 Lani Willrich\n\
+hackertyper 2.1.1\n\
+Copyright (C) 2019-2023 Lani Willrich\n\
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
